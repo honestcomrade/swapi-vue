@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Planets</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
@@ -15,6 +15,12 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-image: url('./assets/body_background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+  height: 100%;
 }
 #nav {
   padding: 30px;
