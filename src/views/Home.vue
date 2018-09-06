@@ -1,18 +1,45 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <ul id="example-1">
+      <li v-for="planet in results" :key="planet.name">
+        {{ planet.name }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-
-@Component({
-  components: {
-    HelloWorld,
+import { DataFetch } from '@/services/fetch-service.ts';
+const getter = new DataFetch();
+export default Vue.extend ({
+  data() {
+    return {
+      loading: true,
+      results: null,
+    };
   },
-})
-export default class Home extends Vue {}
+  created() {
+    getter.getData('planets').then((response) => {
+      this.loading = false;
+      this.results = response.results;
+      console.log(response);
+    }).catch((err) => {
+      console.error(err);
+    });
+  },
+});
 </script>
+<style lang="scss">
+  .home {
+    ul {
+      list-style-type: none;
+      list-style: none;
+      padding: 0;
+      li {
+        cursor: default;
+      }
+    }
+  }
+</style>
