@@ -1,11 +1,13 @@
 <template>
   <div class="home">
-    <div v-if="loading" class="loader-image"></div>
-    <ul v-if="!loading">
-      <li v-for="planet in results" :key="planet.name">
-        {{ planet.name }}
-      </li>
-    </ul>
+    <transition name="fade" mode="out-in">
+      <div v-if="loading" key="loading" class="loader-image"></div>
+      <ul v-else key="loaded">
+        <li v-for="planet in results" :key="planet.name">
+          {{ planet.name }}
+        </li>
+      </ul>
+    </transition>  
   </div>
 </template>
 
@@ -27,7 +29,6 @@ export default Vue.extend ({
       setTimeout(() => {
         this.loading = false;
       }, 2500);
-      console.log(response);
     }).catch((err) => {
       console.error(err);
     });
@@ -35,6 +36,15 @@ export default Vue.extend ({
 });
 </script>
 <style lang="scss">
+  .fade-leave-active {
+    transition: opacity .5s ease;
+  }
+  .fade-enter-active {
+    transition: opacity .2s ease;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
   .home {
     height: calc(100% - 83px);
     display: flex;
@@ -56,6 +66,8 @@ export default Vue.extend ({
       padding: 0;
       li {
         cursor: default;
+        font-size: 18px;
+        padding: 4px;
       }
     }
   }
