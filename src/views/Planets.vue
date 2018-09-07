@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="data-set-wrapper">
     <transition name="fade" mode="out-in">
       <div v-if="loading" key="loading" class="loader-image"></div>
       <ul v-else key="loaded">
@@ -45,14 +45,14 @@ export default Vue.extend ({
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
-  .home {
+  .data-set-wrapper {
     height: calc(100% - 83px);
     display: flex;
     justify-content: center;
     align-items: center;
     margin: auto;
     .loader-image {
-      border-radius: 10px;
+      border-radius: 1px;
       box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
       height: 400px;
       width: 350px;
@@ -66,7 +66,7 @@ export default Vue.extend ({
       padding: 0;
       li {
         cursor: default;
-        font-size: 18px;
+        font-size: 19px;
         padding: 4px;
       }
     }
