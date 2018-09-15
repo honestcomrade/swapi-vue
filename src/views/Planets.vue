@@ -1,6 +1,6 @@
 <template>
   <div class="data-set-wrapper">
-    <transition name="fade" mode="out-in">
+    <transition appear name="fade" mode="out-in">
       <div v-if="loading" key="loading" class="loader-image"></div>
       <ul v-else key="loaded">
         <li v-for="planet in results" :key="planet.name">
@@ -12,28 +12,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { DataFetch } from '@/services/fetch-service.ts';
-import { setTimeout } from 'timers';
-const getter = new DataFetch();
-export default Vue.extend ({
-  data() {
-    return {
-      loading: true,
-      results: null,
-    };
-  },
-  created() {
-    getter.getData('planets').then((response) => {
-      this.results = response.results;
-      setTimeout(() => {
-        this.loading = false;
-      }, 2500);
-    }).catch((err) => {
-      console.error(err);
-    });
-  },
-});
+  import { Component, Vue } from 'vue-property-decorator';
+  import { DataFetch } from '@/services/fetch-service.ts';
+  import { setTimeout } from 'timers';
+  const getter = new DataFetch();
+  export default Vue.component ('planets', {
+    data() {
+      return {
+        loading: true,
+        results: null,
+      };
+    },
+    created() {
+      getter.getData('planets').then((response) => {
+        this.results = response.results;
+        setTimeout(() => {
+          this.loading = false;
+        }, 2500);
+      }).catch((err) => {
+        console.error(err);
+      });
+    },
+  });
 </script>
 <style lang="scss">
   .fade-leave-active {
