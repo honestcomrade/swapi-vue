@@ -8,15 +8,17 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Loader extends Vue {
   created() {
-    console.log('created');
+    console.log('loading');
+  };
+  destroyed() {
+    console.log('loaded')
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .loader-image {
-  border-radius: 1px;
+  border-radius: 2px;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   height: 400px;
   width: 350px;

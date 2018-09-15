@@ -1,11 +1,13 @@
 <template>
   <div class="data-set-wrapper">
-    <transition appear name="fade" mode="out-in">
+    <transition appear name="fade" mode="out-in" @after-enter="showList = true">
       <Loader v-if="loading" key="loading" class="loader-image"></Loader>
       <ul v-else key="loaded">
-        <li v-for="planet in results" :key="planet.name">
-          {{ planet.name }}
-        </li>
+        <transition-group name="slide">
+          <li class="planet" v-for="planet in results" :key="planet.name" v-if="showList">
+            {{ planet.name }}
+          </li>
+        </transition-group>
       </ul>
     </transition>  
   </div>
@@ -18,6 +20,13 @@
   import { setTimeout } from 'timers';
   const getter = new DataFetch();
   export default Vue.component ('planets', {
+
+    methods: {
+      async getPlanets() {
+        const { data } = await getter.getData('planets');
+        return data;
+      }
+    },
     components: {
       Loader
     },
@@ -25,6 +34,7 @@
       return {
         loading: true,
         results: null,
+        showList: false,
       };
     },
     created() {
@@ -49,6 +59,28 @@
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
+  .slide {
+    transition: all 0.5s;
+
+  }
+  .slide-enter, .slide-leave-to
+  /* .slide-leave-active for <2.1.8 */ {
+    opacity: 0;
+    transform: scale(0);
+  }
+  .slide-enter-to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .slide-leave-active {
+    /*position: absolute;*/
+  }
+
+  .slide-move {
+    opacity: 1;
+    transition: all 0.5s;
+  } 
   .data-set-wrapper {
     height: calc(100% - 83px);
     display: flex;
