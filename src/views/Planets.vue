@@ -1,7 +1,7 @@
 <template>
   <div class="data-set-wrapper">
     <transition appear name="fade" mode="out-in">
-      <div v-if="loading" key="loading" class="loader-image"></div>
+      <Loader v-if="loading" key="loading" class="loader-image"></Loader>
       <ul v-else key="loaded">
         <li v-for="planet in results" :key="planet.name">
           {{ planet.name }}
@@ -14,9 +14,13 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import { DataFetch } from '@/services/fetch-service.ts';
+  import Loader from '@/components/Loader.vue';
   import { setTimeout } from 'timers';
   const getter = new DataFetch();
   export default Vue.component ('planets', {
+    components: {
+      Loader
+    },
     data() {
       return {
         loading: true,
@@ -51,15 +55,6 @@
     justify-content: center;
     align-items: center;
     margin: auto;
-    .loader-image {
-      border-radius: 1px;
-      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-      height: 400px;
-      width: 350px;
-      background-image: url(../assets/tumblr_ncongzaETr1s2wio8o1_500.gif);
-      background-position: center;
-      background-size: cover;
-    }
     ul {
       list-style-type: none;
       list-style: none;
